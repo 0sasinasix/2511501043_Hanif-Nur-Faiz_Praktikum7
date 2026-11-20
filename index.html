@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Admin - Data Mahasiswa UNISA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Ambient Background Effects -->
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-logo">
+            <span>U</span>
+          </div>
+          <div>
+            <span class="brand-title">UNISA Admin</span>
+            <span class="brand-sub">Sistem Akademik</span>
+          </div>
+        </div>
+        <button class="btn-close" aria-label="Tutup Menu">✕</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <p class="nav-label">NAVIGASI UTAMA</p>
+        <ul>
+          <li>
+            <a href="#" id="menuData" class="active">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              <span>Data Mahasiswa</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="server-card">
+          <div class="server-card-top">
+            <span class="pulse-dot"></span>
+            <span>REST API PHP</span>
+          </div>
+          <p>Terhubung ke database <code>praktikum_fullstack</code></p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" aria-label="Buka Menu">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+          <div>
+            <h1>Dashboard Admin</h1>
+            <p class="header-subtitle">Manajemen Data Mahasiswa UNISA</p>
+          </div>
+        </div>
+
+        <div class="header-badge">
+          <span class="pulse-dot"></span>
+          <span>Sistem Aktif</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="dashboard-grid">
+          <!-- Kolom Kiri: Form Input / Edit -->
+          <section class="card section-form" id="formContainer">
+            <div class="card-top-line"></div>
+            <div class="card-header">
+              <div class="mode-badge" id="formModeBadge">MODE INPUT</div>
+              <h2 id="formTitle">Tambah Data Mahasiswa</h2>
+              <p class="card-desc">
+                Masukkan nama lengkap dan NIM mahasiswa pada kolom di bawah.
+              </p>
+            </div>
+
+            <form id="formMahasiswa" autocomplete="off">
+              <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  <input
+                    type="text"
+                    id="nama"
+                    placeholder="Contoh: Hanif Nur Faiz"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="nim">Nomor Induk Mahasiswa (NIM)</label>
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <line x1="7" y1="9" x2="17" y2="9" />
+                    <line x1="7" y1="13" x2="13" y2="13" />
+                  </svg>
+                  <input
+                    type="text"
+                    id="nim"
+                    inputmode="numeric"
+                    placeholder="Contoh: 2511501043"
+                    required
+                  />
+                </div>
+              </div>
+
+              <input type="hidden" id="editId" value="" />
+
+              <div class="form-actions">
+                <button type="submit" id="submitBtn" class="btn btn-primary">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                  <span>Tambah Data</span>
+                </button>
+                <button
+                  type="button"
+                  id="cancelEdit"
+                  class="btn btn-secondary"
+                  style="display: none"
+                >
+                  Batal
+                </button>
+              </div>
+            </form>
+
+            <div id="message" class="alert-box" role="alert"></div>
+          </section>
+
+          <!-- Kolom Kanan: Tabel Daftar Mahasiswa -->
+          <section class="card section-table">
+            <div class="card-top-line"></div>
+            <div class="table-toolbar">
+              <div class="table-title-group">
+                <h2>Daftar Mahasiswa</h2>
+                <span class="badge-count" id="totalCount">0 Data</span>
+              </div>
+
+              <div class="search-box">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input
+                  type="search"
+                  id="searchInput"
+                  placeholder="Cari nama atau NIM..."
+                />
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table id="tabelMahasiswa">
+                <thead>
+                  <tr>
+                    <th style="width: 64px">No</th>
+                    <th>Mahasiswa</th>
+                    <th style="width: 170px">NIM</th>
+                    <th style="width: 170px; text-align: center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal Konfirmasi Hapus -->
+    <div class="modal-backdrop" id="deleteModal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-icon">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            <line x1="10" y1="11" x2="10" y2="17" />
+            <line x1="14" y1="11" x2="14" y2="17" />
+          </svg>
+        </div>
+        <h3 id="modalTitle">Hapus Data Mahasiswa?</h3>
+        <p id="modalDesc">
+          Data yang dihapus tidak dapat dikembalikan. Lanjutkan penghapusan?
+        </p>
+        <div class="modal-actions">
+          <button type="button" id="cancelDeleteBtn" class="btn btn-secondary">
+            Batal
+          </button>
+          <button type="button" id="confirmDeleteBtn" class="btn btn-danger">
+            Ya, Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
